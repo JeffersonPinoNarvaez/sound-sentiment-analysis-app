@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sound-classifier-backend
+    image: sound-classifier/backend
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - sound-classifier-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sound-classifier-frontend
+    image: sound-classifier/frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3005:8080"
+    networks:
+      - sound-classifier-network
+
+networks:
+  sound-classifier-network:
+    driver: bridge
